@@ -10,3 +10,6 @@ tags
 diode.ipr
 reddit is fun.iml
 diode.iws
+.idea/
+.gradle/
+*.iml
