@@ -307,14 +307,15 @@ public final class PickSubredditActivity extends ListActivity {
                         reddits.add(sr);
                     }
                     Collections.sort(reddits);
-                    // insert the frontpage at the head of the list
+//don't add these.
+/*                    // insert the frontpage at the head of the list
                     SubredditInfo fp = new SubredditInfo();
                     fp.name = Constants.FRONTPAGE_STRING;
                     reddits.add(0, fp);
                     // insert /r/all as well (this is a really gross way to do these. . .)
                     fp = new SubredditInfo();
                     fp.name = "all";
-                    reddits.add(1, fp);
+                    reddits.add(1, fp);*/
                     CacheInfo.setCachedSubredditList(getApplicationContext(), reddits);
                     refresh = false;
                 } else {
