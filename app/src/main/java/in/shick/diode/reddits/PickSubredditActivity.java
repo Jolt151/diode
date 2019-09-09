@@ -304,7 +304,8 @@ public final class PickSubredditActivity extends ListActivity {
                         sr.subscribers = ee.get("subscribers").getIntValue();
                         sr.url = new URL(Constants.REDDIT_BASE_URL + ee.get("url").getTextValue());
                         sr.created = new Date((long) ee.get("created").getIntValue() * 1000);
-                        reddits.add(sr);
+
+                        if (!sr.nsfw) reddits.add(sr);
                     }
                     Collections.sort(reddits);
 //don't add these.
