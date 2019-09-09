@@ -207,7 +207,7 @@ public final class PickSubredditActivity extends ListActivity {
         }
         Common.updateListDrawables(this, mSettings.getTheme());
 
-        // Set the EditText to do same thing as onListItemClick
+/*        // Set the EditText to do same thing as onListItemClick
         mEt = (EditText) findViewById(R.id.pick_subreddit_input);
         if (mEt != null) {
             mEt.setOnKeyListener(new OnKeyListener() {
@@ -228,7 +228,7 @@ public final class PickSubredditActivity extends ListActivity {
                     returnSubreddit(mEt.getText().toString().trim());
                 }
             });
-        }
+        }*/
 
         getListView().requestFocus();
     }

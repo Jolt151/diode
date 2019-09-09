@@ -33,7 +33,7 @@
     <include layout="@layout/loading_light" />
     <include layout="@layout/loading_dark" />
     
-    <RelativeLayout
+<!--    <RelativeLayout
     	android:layout_width="fill_parent"
     	android:layout_height="?android:attr/listPreferredItemHeight"
     	android:orientation="horizontal"
@@ -44,7 +44,7 @@
 	    	android:layout_alignParentRight="true"
 	    	android:text="@string/pick_subreddit_button"
 	    	/>
-	    <!-- Disable focus initially so soft keyboard doesn't pop up -->
+	    &lt;!&ndash; Disable focus initially so soft keyboard doesn't pop up &ndash;&gt;
 	    <EditText android:id="@+id/pick_subreddit_input"
 	    	android:layout_width="fill_parent"
 	    	android:layout_height="fill_parent"
@@ -52,7 +52,7 @@
 	    	android:focusable="false"
 	    	android:inputType="text"
 	    	/>
-   	</RelativeLayout>
+   	</RelativeLayout>-->
 
     <ListView android:id="@android:id/list"
     	android:layout_width="fill_parent"
