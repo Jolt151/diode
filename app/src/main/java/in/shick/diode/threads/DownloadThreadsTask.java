@@ -295,7 +295,11 @@ public abstract class DownloadThreadsTask extends AsyncTask<Void, Long, Boolean>
                 if (Constants.THREAD_KIND.equals(tiContainer.getKind())) {
                     ThingInfo ti = tiContainer.getData();
                     ti.setClicked(Common.isClicked(mContext, ti.getUrl()));
-                    if((mSettings.getShowNSFW() || !ti.isOver_18()) && !mFilterEngine.isFiltered(ti)) {
+/*                    if((mSettings.getShowNSFW() || !ti.isOver_18()) && !mFilterEngine.isFiltered(ti)) {
+                        mThingInfos.add(ti);
+                    }*/
+                    //don't show nsfw threads
+                    if (!ti.isOver_18() && !mFilterEngine.isFiltered(ti)) {
                         mThingInfos.add(ti);
                     }
                 }
