@@ -23,7 +23,6 @@ public class ProcessCommentsTask extends AsyncTask<Void, Integer, Void> {
 
     private String mThingInfoIdToPositionTo="";
 
-
     /**
      * List holding the deferred processing list starting from the first object to handle
      */
@@ -101,14 +100,14 @@ public class ProcessCommentsTask extends AsyncTask<Void, Integer, Void> {
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
-        positionToThingId();
+       super.onPostExecute(aVoid);
+       positionToThingId();
     }
 
     private void positionToThingId() {
-        if(mActivity!=null && !StringUtils.isEmpty(mThingInfoIdToPositionTo )) {
+       if(mActivity!=null && !StringUtils.isEmpty(mThingInfoIdToPositionTo )) {
             mActivity.setToPosition(mThingInfoIdToPositionTo);
-        }
+       }
     }
 
     private void cleanupQueues() {

@@ -98,8 +98,8 @@
 	<string name="compose_captcha_loading">loading CAPTCHA…</string>
 	
 	<string name="comment_hidden">[+]</string>
-	<string name="more_comments">load more comments</string>
 	<string name="continue_this_thread">continue this thread</string>
+	<string name="more_comments">load more comments</string>
 	<string name="context_warning">You are viewing a single comment\'s thread.</string>
 	<string name="click_to_view_all">Click here to view the rest of the comments.</string>
 	<string name="locked_thread_warning">This post is locked.</string>
@@ -345,5 +345,7 @@
 
 	<!-- Miscellaneous Strings -->
 	<string name="comment_by_string">Comment by %s</string>
+    <string name="channel_name">Inbox</string>
+	<string name="channel_id">inbox</string>
 
 </resources>

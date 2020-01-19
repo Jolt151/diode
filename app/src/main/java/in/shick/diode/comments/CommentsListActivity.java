@@ -20,7 +20,6 @@
 package in.shick.diode.comments;
 
 
-import android.content.ActivityNotFoundException;
 import android.text.SpannableStringBuilder;
 import in.shick.diode.R;
 import in.shick.diode.common.CacheInfo;
@@ -110,8 +109,6 @@ import android.widget.Toast;
  */
 public class CommentsListActivity extends ListActivity
     implements View.OnCreateContextMenuListener {
-
-    private String mSelectedThingId = "";
 
     public static class ObjectStates {
         DownloadCommentsTask mDownloadCommentsTask = null;
@@ -419,10 +416,6 @@ public class CommentsListActivity extends ListActivity
         return mCommentsAdapter != null && mCommentsAdapter.getItemViewType(position) == CommentsListAdapter.MORE_ITEM_VIEW_TYPE;
     }
 
-    private boolean isContinueThisThreadPosition(int position) {
-        return mCommentsAdapter != null && mCommentsAdapter.getItemViewType(position) == CommentsListAdapter.CONTINUE_THIS_THREAD_ITEM_VIEW_TYPE;
-    }
-
     final class CommentsListAdapter extends ArrayAdapter<ThingInfo> {
         public static final int OP_ITEM_VIEW_TYPE = 0;
         public static final int COMMENT_ITEM_VIEW_TYPE = 1;
@@ -587,7 +580,6 @@ public class CommentsListActivity extends ListActivity
                         view = mInflater.inflate(R.layout.continue_this_thread_view, null);
                         loadAndStoreViewHolder(view);
                     }
-                    setContextOPID(item.getId());
                     setCommentIndent(view, item.getIndent(), mSettings);
                 } else if (item.isArchivedPlaceholder()) {
                     if (view == null) {
@@ -714,7 +706,6 @@ public class CommentsListActivity extends ListActivity
             // Clicking the comment-context warning takes you to the whole comments thread.
             if (item.isContextPlaceholder()) {
                 resetContextInfo();
-                getNewDownloadCommentsTask().withPositionTo(item.getId());
                 getNewDownloadCommentsTask().execute(Constants.DEFAULT_COMMENT_DOWNLOAD_LIMIT);
             } else if (!item.isPlaceholder()){
                 // Lazy-load the URL list to make the list-loading more 'snappy'.
@@ -727,6 +718,10 @@ public class CommentsListActivity extends ListActivity
             }
         }
     }
+
+    private boolean isContinueThisThreadPosition(int position) {
+         return mCommentsAdapter != null && mCommentsAdapter.getItemViewType(position) == CommentsListAdapter.CONTINUE_THIS_THREAD_ITEM_VIEW_TYPE;
+     }
 
     /**
      * Resets the output UI list contents, retains session state.
@@ -774,6 +769,10 @@ public class CommentsListActivity extends ListActivity
     private void resetContextInfo() {
         mContextOPID = null;
         mContextCount = 0;
+    }
+
+    private String getContextOPID() {
+        return mContextOPID;
     }
 
     private void setContextOPID(String contextOPID) {
@@ -1462,7 +1461,7 @@ public class CommentsListActivity extends ListActivity
         case R.id.refresh_menu_id:
             CacheInfo.invalidateCachedThread(getApplicationContext());
             DownloadCommentsTask downloadCommentsTask = getNewDownloadCommentsTask();
-            if(downloadCommentsTask.getStatus() != Status.RUNNING)
+            if(downloadCommentsTask.getStatus() != AsyncTask.Status.RUNNING)
                 downloadCommentsTask.execute(Constants.DEFAULT_COMMENT_DOWNLOAD_LIMIT);
             break;
         case R.id.sort_by_menu_id:
@@ -1628,7 +1627,7 @@ public class CommentsListActivity extends ListActivity
 
             try {
                 startActivity(Intent.createChooser(intent, "Share Link"));
-            } catch (ActivityNotFoundException ex) {
+            } catch (android.content.ActivityNotFoundException ex) {
 
             }
 
@@ -1739,7 +1738,7 @@ public class CommentsListActivity extends ListActivity
 
             try {
                 startActivity(Intent.createChooser(intent2, getString(R.string.share_comments)));
-            } catch (ActivityNotFoundException ex) {
+            } catch (android.content.ActivityNotFoundException ex) {
 
             }
             return true;
@@ -1747,6 +1746,18 @@ public class CommentsListActivity extends ListActivity
 
         default:
             return super.onContextItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        String contextOPID = getContextOPID();
+        if(contextOPID == null) {
+            super.onBackPressed();
+        } else {
+            resetContextInfo();
+            getNewDownloadCommentsTask().withPositionTo(contextOPID);
+            getNewDownloadCommentsTask().execute(Constants.DEFAULT_COMMENT_DOWNLOAD_LIMIT);
         }
     }
 
@@ -2376,7 +2387,7 @@ public class CommentsListActivity extends ListActivity
     /**
      * Called to "thaw" re-animate the app from a previous onSaveInstanceState().
      *
-     * @see Activity#onRestoreInstanceState
+     * @see android.app.Activity#onRestoreInstanceState
      */
     @Override
     protected void onRestoreInstanceState(Bundle state) {

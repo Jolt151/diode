@@ -459,13 +459,10 @@ public class DownloadCommentsTask extends AsyncTask<Integer, Long, Boolean>
             if(!Constants.CONTINUE_THIS_THREAD_KIND_ID.equals(commentThingListing.getData().getId())) {
                 ci.setLoadMoreCommentsPlaceholder(true);
                 if (Constants.LOGGING) Log.v(TAG, "new more position at " + (insertedCommentIndex));
-
-            }
-            else {
+            } else {
                 ci.setIsContinueThisThreadPlaceholder(true);
                 ci.setId(ci.getParent_id().replace(Constants.COMMENT_KIND+"_", ""));
                 if (Constants.LOGGING) Log.v(TAG, "new continue this thread position at " + (insertedCommentIndex));
-
             }
 
             return insertedCommentIndex;

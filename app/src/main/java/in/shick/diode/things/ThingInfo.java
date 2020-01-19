@@ -332,16 +332,20 @@ public class ThingInfo implements Serializable, Parcelable {
         return mIsLoadMoreCommentsPlaceholder;
     }
 
-    public boolean isContinueThisThreadPlaceholder() {
-        return mIsContinueThisThreadPlaceholder;
-    }
-
     public boolean isHiddenCommentHead() {
         return mIsHiddenCommentHead;
     }
 
     public boolean isHiddenCommentDescendant() {
         return mIsHiddenCommentDescendant;
+    }
+
+    public boolean isContinueThisThreadPlaceholder() {
+        return mIsContinueThisThreadPlaceholder;
+    }
+
+    public void setIsContinueThisThreadPlaceholder(boolean mIsContinueThisThreadPlaceholder) {
+        this.mIsContinueThisThreadPlaceholder = mIsContinueThisThreadPlaceholder;
     }
 
     public void setAuthor(String author) {
@@ -470,10 +474,6 @@ public class ThingInfo implements Serializable, Parcelable {
 
     public void setLoadMoreCommentsPlaceholder(boolean loadMoreCommentsPlaceholder) {
         mIsLoadMoreCommentsPlaceholder = loadMoreCommentsPlaceholder;
-    }
-
-    public void setIsContinueThisThreadPlaceholder(boolean mIsContinueThisThreadPlaceholder) {
-        this.mIsContinueThisThreadPlaceholder = mIsContinueThisThreadPlaceholder;
     }
 
     public void setName(String name) {
