@@ -31,6 +31,7 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 
+import dk.brics.automaton.Automaton;
 import in.shick.diode.common.Constants;
 import in.shick.diode.common.util.Util;
 
@@ -81,6 +82,8 @@ public class Markdown {
 
     static final RunAutomaton subredditAutomaton = new RunAutomaton(new RegExp("[rR]/[a-zA-Z0-9]+/?", RegExp.NONE).toAutomaton());
 
+    static final RunAutomaton previewReddItAutomaton = new RunAutomaton(new RegExp("https:\\/\\/preview.redd.it\\/?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)")
+            .toAutomaton());
     /**
      * @param txt input
      * @param urls out URLs
@@ -103,6 +106,28 @@ public class Markdown {
         urls.clear();
 
         TreeMap<Integer, Integer> startToEndOffsetMap = new TreeMap<Integer, Integer>();
+
+/*        if (txt.startsWith("https://preview.redd.it")) {
+            String url = txt.replaceAll("&amp;", "&");
+            urls.add(new MarkdownURL(0, url, url));
+        }*/
+
+
+/*        AutomatonMatcher previewReddIt = previewReddItAutomaton.newMatcher(txt);
+        while (previewReddIt.find()) {
+            *//*String previewRedditUrl = previewReddIt.group();
+            previewRedditUrl = previewRedditUrl.replaceAll("&amp;", "&");
+            urls.add(new MarkdownURL(0, previewRedditUrl, previewRedditUrl));*//*
+        }*/
+
+/*        Matcher m = Pattern.compile("^https:\\/\\/preview.redd.it?\\/?([^:\\/\\s]+)((\\/\\w+)*\\/)([\\w\\-\\.]+[^#?\\s]+)(.*)?(#[\\w\\-]+)?$")
+                .matcher(txt);
+        while (m.find()) {
+            //allMatches.add(m.group());
+            Log.d(TAG, m.group());
+        }*/
+
+        txt = txt.replaceAll("&amp;", "&");
 
         // doAnchors originally called from runBlockGamut -> formParagraphs -> runSpanGamut
         txt = doAnchorURLs(txt, urls, startToEndOffsetMap);
