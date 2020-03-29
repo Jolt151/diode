@@ -31,6 +31,7 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.customtabs.CustomTabsIntent;
 import android.telephony.PhoneNumberUtils;
 import android.text.Html;
 import android.view.ContextThemeWrapper;
@@ -669,18 +670,32 @@ public class Common {
             }
             context.startActivity(browser);
         } else {
-            Intent browser = new Intent(context, BrowserActivity.class);
-            browser.setData(uri);
-            if (forceDesktopUserAgent) {
-                browser.putExtra(Constants.EXTRA_FORCE_UA_STRING, "desktop");
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                CustomTabsIntent customTabsIntent = builder.build();
+                //context.startActivity(customTabsIntent.intent);
+                customTabsIntent.launchUrl((Activity) context, Uri.parse(url));
+            } else {
+                /*Intent browser = new Intent(context, BrowserActivity.class);
+                browser.setData(uri);
+                if (forceDesktopUserAgent) {
+                    browser.putExtra(Constants.EXTRA_FORCE_UA_STRING, "desktop");
+                }
+                if (threadUrl != null) {
+                    browser.putExtra(Constants.EXTRA_THREAD_URL, threadUrl);
+                }
+                if (requireNewTask) {
+                    browser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                }
+                context.startActivity(browser);*/
+
+                Intent browser = new Intent(Intent.ACTION_VIEW, uri);
+                browser.putExtra(Browser.EXTRA_APPLICATION_ID, context.getPackageName());
+                if (requireNewTask) {
+                    browser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                }
+                context.startActivity(browser);
             }
-            if (threadUrl != null) {
-                browser.putExtra(Constants.EXTRA_THREAD_URL, threadUrl);
-            }
-            if (requireNewTask) {
-                browser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            }
-            context.startActivity(browser);
         }
     }
 
